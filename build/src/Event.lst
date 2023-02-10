@@ -1,0 +1,598 @@
+GAS LISTING /tmp/cc4UBkCP.s 			page 1
+
+
+   1              		.file	"Event.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN5Event4waitEv
+   9              	_ZN5Event4waitEv:
+  10              	.LFB11:
+  11              		.file 1 "src/Event.cpp"
+   1:src/Event.cpp **** //
+   2:src/Event.cpp **** // Created by os on 6/19/22.
+   3:src/Event.cpp **** //
+   4:src/Event.cpp **** 
+   5:src/Event.cpp **** #include "../h/Event.hpp"
+   6:src/Event.cpp **** 
+   7:src/Event.cpp **** Event::Event() {
+   8:src/Event.cpp ****     SemaphoreK(0);
+   9:src/Event.cpp **** }
+  10:src/Event.cpp **** 
+  11:src/Event.cpp **** int Event::wait() {
+  12              		.loc 1 11 19
+  13              		.cfi_startproc
+  14              	.LVL0:
+  12:src/Event.cpp ****     if(--value < 0){
+  15              		.loc 1 12 5
+  16              		.loc 1 12 10 is_stmt 0
+  17 0000 83278500 		lw	a5,8(a0)
+  18              		.loc 1 12 8
+  19 0004 9B87F7FF 		addiw	a5,a5,-1
+  20              		.loc 1 12 16
+  21 0008 2324F500 		sw	a5,8(a0)
+  22              		.loc 1 12 5
+  23 000c 13970702 		slli	a4,a5,32
+  24 0010 63460700 		bltz	a4,.L7
+  13:src/Event.cpp ****         block();
+  14:src/Event.cpp ****     }
+  15:src/Event.cpp ****     return 0;
+  25              		.loc 1 15 5 is_stmt 1
+  16:src/Event.cpp **** }
+  26              		.loc 1 16 1 is_stmt 0
+  27 0014 13050000 		li	a0,0
+  28              	.LVL1:
+  29 0018 67800000 		ret
+  30              	.LVL2:
+  31              	.L7:
+  11:src/Event.cpp ****     if(--value < 0){
+  32              		.loc 1 11 19
+  33 001c 130101FF 		addi	sp,sp,-16
+  34              		.cfi_def_cfa_offset 16
+  35 0020 23341100 		sd	ra,8(sp)
+  36 0024 23308100 		sd	s0,0(sp)
+  37              		.cfi_offset 1, -8
+  38              		.cfi_offset 8, -16
+  39 0028 13040101 		addi	s0,sp,16
+  40              		.cfi_def_cfa 8, 0
+  13:src/Event.cpp ****         block();
+GAS LISTING /tmp/cc4UBkCP.s 			page 2
+
+
+  41              		.loc 1 13 9 is_stmt 1
+  13:src/Event.cpp ****         block();
+  42              		.loc 1 13 14 is_stmt 0
+  43 002c 97000000 		call	_ZN10SemaphoreK5blockEv@plt
+  43      E7800000 
+  44              	.LVL3:
+  15:src/Event.cpp **** }
+  45              		.loc 1 15 5 is_stmt 1
+  46              		.loc 1 16 1 is_stmt 0
+  47 0034 13050000 		li	a0,0
+  48 0038 83308100 		ld	ra,8(sp)
+  49              		.cfi_restore 1
+  50 003c 03340100 		ld	s0,0(sp)
+  51              		.cfi_restore 8
+  52              		.cfi_def_cfa 2, 16
+  53 0040 13010101 		addi	sp,sp,16
+  54              		.cfi_def_cfa_offset 0
+  55 0044 67800000 		jr	ra
+  56              		.cfi_endproc
+  57              	.LFE11:
+  59              		.align	2
+  60              		.globl	_ZN5Event6signalEv
+  62              	_ZN5Event6signalEv:
+  63              	.LFB12:
+  17:src/Event.cpp **** 
+  18:src/Event.cpp **** int Event::signal() {
+  64              		.loc 1 18 21 is_stmt 1
+  65              		.cfi_startproc
+  66              	.LVL4:
+  19:src/Event.cpp ****     if(++value<=0){
+  67              		.loc 1 19 5
+  68              		.loc 1 19 10 is_stmt 0
+  69 0048 83278500 		lw	a5,8(a0)
+  70              		.loc 1 19 8
+  71 004c 9B871700 		addiw	a5,a5,1
+  72 0050 1B870700 		sext.w	a4,a5
+  73              		.loc 1 19 15
+  74 0054 2324F500 		sw	a5,8(a0)
+  75              		.loc 1 19 5
+  76 0058 635AE000 		blez	a4,.L15
+  20:src/Event.cpp ****         deblock();
+  21:src/Event.cpp ****     }else{
+  22:src/Event.cpp ****         value = 1;
+  77              		.loc 1 22 9 is_stmt 1
+  78              		.loc 1 22 15 is_stmt 0
+  79 005c 93071000 		li	a5,1
+  80 0060 2324F500 		sw	a5,8(a0)
+  23:src/Event.cpp ****     }
+  24:src/Event.cpp ****     return 0;
+  81              		.loc 1 24 5 is_stmt 1
+  25:src/Event.cpp **** }
+  82              		.loc 1 25 1 is_stmt 0
+  83 0064 13050000 		li	a0,0
+  84              	.LVL5:
+  85 0068 67800000 		ret
+  86              	.LVL6:
+  87              	.L15:
+GAS LISTING /tmp/cc4UBkCP.s 			page 3
+
+
+  18:src/Event.cpp ****     if(++value<=0){
+  88              		.loc 1 18 21
+  89 006c 130101FF 		addi	sp,sp,-16
+  90              		.cfi_def_cfa_offset 16
+  91 0070 23341100 		sd	ra,8(sp)
+  92 0074 23308100 		sd	s0,0(sp)
+  93              		.cfi_offset 1, -8
+  94              		.cfi_offset 8, -16
+  95 0078 13040101 		addi	s0,sp,16
+  96              		.cfi_def_cfa 8, 0
+  20:src/Event.cpp ****     }else{
+  97              		.loc 1 20 9 is_stmt 1
+  20:src/Event.cpp ****     }else{
+  98              		.loc 1 20 16 is_stmt 0
+  99 007c 97000000 		call	_ZN10SemaphoreK7deblockEv@plt
+  99      E7800000 
+ 100              	.LVL7:
+  24:src/Event.cpp **** }
+ 101              		.loc 1 24 5 is_stmt 1
+ 102              		.loc 1 25 1 is_stmt 0
+ 103 0084 13050000 		li	a0,0
+ 104 0088 83308100 		ld	ra,8(sp)
+ 105              		.cfi_restore 1
+ 106 008c 03340100 		ld	s0,0(sp)
+ 107              		.cfi_restore 8
+ 108              		.cfi_def_cfa 2, 16
+ 109 0090 13010101 		addi	sp,sp,16
+ 110              		.cfi_def_cfa_offset 0
+ 111 0094 67800000 		jr	ra
+ 112              		.cfi_endproc
+ 113              	.LFE12:
+ 115              		.section	.text._ZN5EventD2Ev,"axG",@progbits,_ZN5EventD5Ev,comdat
+ 116              		.align	2
+ 117              		.weak	_ZN5EventD2Ev
+ 119              	_ZN5EventD2Ev:
+ 120              	.LFB14:
+ 121              		.file 2 "src/../h/Event.hpp"
+   1:src/../h/Event.hpp **** //
+   2:src/../h/Event.hpp **** // Created by os on 6/19/22.
+   3:src/../h/Event.hpp **** //
+   4:src/../h/Event.hpp **** 
+   5:src/../h/Event.hpp **** #ifndef PROJECT_FINAL_EVENT_HPP
+   6:src/../h/Event.hpp **** #define PROJECT_FINAL_EVENT_HPP
+   7:src/../h/Event.hpp **** #include "../h/SemaphoreK.hpp"
+   8:src/../h/Event.hpp **** 
+   9:src/../h/Event.hpp **** class Event: public SemaphoreK {
+ 122              		.loc 2 9 7 is_stmt 1
+ 123              		.cfi_startproc
+ 124              	.LVL8:
+ 125 0000 130101FF 		addi	sp,sp,-16
+ 126              		.cfi_def_cfa_offset 16
+ 127 0004 23341100 		sd	ra,8(sp)
+ 128 0008 23308100 		sd	s0,0(sp)
+ 129              		.cfi_offset 1, -8
+ 130              		.cfi_offset 8, -16
+ 131 000c 13040101 		addi	s0,sp,16
+ 132              		.cfi_def_cfa 8, 0
+GAS LISTING /tmp/cc4UBkCP.s 			page 4
+
+
+ 133              	.LBB12:
+ 134              		.loc 2 9 7 is_stmt 0
+ 135 0010 97070000 		lla	a5,_ZTV5Event+16
+ 135      93870700 
+ 136 0018 2330F500 		sd	a5,0(a0)
+ 137 001c 97000000 		call	_ZN10SemaphoreKD2Ev@plt
+ 137      E7800000 
+ 138              	.LVL9:
+ 139              	.LBE12:
+ 140 0024 83308100 		ld	ra,8(sp)
+ 141              		.cfi_restore 1
+ 142 0028 03340100 		ld	s0,0(sp)
+ 143              		.cfi_restore 8
+ 144              		.cfi_def_cfa 2, 16
+ 145 002c 13010101 		addi	sp,sp,16
+ 146              		.cfi_def_cfa_offset 0
+ 147 0030 67800000 		jr	ra
+ 148              		.cfi_endproc
+ 149              	.LFE14:
+ 151              		.weak	_ZN5EventD1Ev
+ 152              		.set	_ZN5EventD1Ev,_ZN5EventD2Ev
+ 153              		.section	.text._ZN5EventD0Ev,"axG",@progbits,_ZN5EventD5Ev,comdat
+ 154              		.align	2
+ 155              		.weak	_ZN5EventD0Ev
+ 157              	_ZN5EventD0Ev:
+ 158              	.LFB16:
+ 159              		.loc 2 9 7 is_stmt 1
+ 160              		.cfi_startproc
+ 161              	.LVL10:
+ 162 0000 130101FE 		addi	sp,sp,-32
+ 163              		.cfi_def_cfa_offset 32
+ 164 0004 233C1100 		sd	ra,24(sp)
+ 165 0008 23388100 		sd	s0,16(sp)
+ 166 000c 23349100 		sd	s1,8(sp)
+ 167              		.cfi_offset 1, -8
+ 168              		.cfi_offset 8, -16
+ 169              		.cfi_offset 9, -24
+ 170 0010 13040102 		addi	s0,sp,32
+ 171              		.cfi_def_cfa 8, 0
+ 172 0014 93040500 		mv	s1,a0
+ 173              	.LVL11:
+ 174              	.LBB13:
+ 175              	.LBB14:
+ 176              		.loc 2 9 7 is_stmt 0
+ 177 0018 97070000 		lla	a5,_ZTV5Event+16
+ 177      93870700 
+ 178 0020 2330F500 		sd	a5,0(a0)
+ 179 0024 97000000 		call	_ZN10SemaphoreKD2Ev@plt
+ 179      E7800000 
+ 180              	.LVL12:
+ 181              	.LBE14:
+ 182              	.LBE13:
+ 183 002c 13850400 		mv	a0,s1
+ 184 0030 97000000 		call	_ZN10SemaphoreKdlEPv@plt
+ 184      E7800000 
+ 185              	.LVL13:
+ 186 0038 83308101 		ld	ra,24(sp)
+GAS LISTING /tmp/cc4UBkCP.s 			page 5
+
+
+ 187              		.cfi_restore 1
+ 188 003c 03340101 		ld	s0,16(sp)
+ 189              		.cfi_restore 8
+ 190              		.cfi_def_cfa 2, 32
+ 191 0040 83348100 		ld	s1,8(sp)
+ 192              		.cfi_restore 9
+ 193              	.LVL14:
+ 194 0044 13010102 		addi	sp,sp,32
+ 195              		.cfi_def_cfa_offset 0
+ 196 0048 67800000 		jr	ra
+ 197              		.cfi_endproc
+ 198              	.LFE16:
+ 200              		.text
+ 201              		.align	2
+ 202              		.globl	_ZN5EventC2Ev
+ 204              	_ZN5EventC2Ev:
+ 205              	.LFB9:
+   7:src/Event.cpp **** }
+ 206              		.loc 1 7 1 is_stmt 1
+ 207              		.cfi_startproc
+ 208              	.LVL15:
+ 209 0098 130101FD 		addi	sp,sp,-48
+ 210              		.cfi_def_cfa_offset 48
+ 211 009c 23341102 		sd	ra,40(sp)
+ 212 00a0 23308102 		sd	s0,32(sp)
+ 213              		.cfi_offset 1, -8
+ 214              		.cfi_offset 8, -16
+ 215 00a4 13040103 		addi	s0,sp,48
+ 216              		.cfi_def_cfa 8, 0
+ 217              	.LVL16:
+ 218              	.LBB15:
+ 219              	.LBB16:
+ 220              	.LBB17:
+ 221              		.file 3 "src/../h/../h/SemaphoreK.hpp"
+   1:src/../h/../h/SemaphoreK.hpp **** //
+   2:src/../h/../h/SemaphoreK.hpp **** // Created by os on 5/22/22.
+   3:src/../h/../h/SemaphoreK.hpp **** //
+   4:src/../h/../h/SemaphoreK.hpp **** 
+   5:src/../h/../h/SemaphoreK.hpp **** #ifndef PROJECT_BASE_V1_0_SEMAPHORE_HPP
+   6:src/../h/../h/SemaphoreK.hpp **** #define PROJECT_BASE_V1_0_SEMAPHORE_HPP
+   7:src/../h/../h/SemaphoreK.hpp **** 
+   8:src/../h/../h/SemaphoreK.hpp **** #include "../h/ThreadK.hpp"
+   9:src/../h/../h/SemaphoreK.hpp **** 
+  10:src/../h/../h/SemaphoreK.hpp **** class SemaphoreK {
+  11:src/../h/../h/SemaphoreK.hpp **** public:
+  12:src/../h/../h/SemaphoreK.hpp ****     SemaphoreK(int val = 1): value(val){}
+ 222              		.loc 3 12 39 is_stmt 0
+ 223 00a8 93071000 		li	a5,1
+ 224 00ac 2324F500 		sw	a5,8(a0)
+ 225 00b0 23380500 		sd	zero,16(a0)
+ 226 00b4 233C0500 		sd	zero,24(a0)
+ 227              	.LVL17:
+ 228              	.LBE17:
+ 229              	.LBE16:
+   7:src/Event.cpp **** }
+ 230              		.loc 1 7 14
+ 231 00b8 97070000 		lla	a5,_ZTV5Event+16
+GAS LISTING /tmp/cc4UBkCP.s 			page 6
+
+
+ 231      93870700 
+ 232 00c0 2330F500 		sd	a5,0(a0)
+   8:src/Event.cpp **** }
+ 233              		.loc 1 8 5 is_stmt 1
+ 234              	.LVL18:
+ 235              	.LBB18:
+ 236              	.LBB19:
+ 237              	.LBB20:
+ 238              		.loc 3 12 39 is_stmt 0
+ 239 00c4 97070000 		la	a5,_ZTV10SemaphoreK
+ 239      83B70700 
+ 240 00cc 93870701 		addi	a5,a5,16
+ 241 00d0 2338F4FC 		sd	a5,-48(s0)
+ 242 00d4 232C04FC 		sw	zero,-40(s0)
+ 243 00d8 233004FE 		sd	zero,-32(s0)
+ 244 00dc 233404FE 		sd	zero,-24(s0)
+ 245              	.LVL19:
+ 246              	.LBE20:
+ 247              	.LBE19:
+ 248              	.LBE18:
+   8:src/Event.cpp **** }
+ 249              		.loc 1 8 5
+ 250 00e0 130504FD 		addi	a0,s0,-48
+ 251              	.LVL20:
+ 252 00e4 97000000 		call	_ZN10SemaphoreKD1Ev@plt
+ 252      E7800000 
+ 253              	.LVL21:
+ 254              	.LBE15:
+   9:src/Event.cpp **** 
+ 255              		.loc 1 9 1
+ 256 00ec 83308102 		ld	ra,40(sp)
+ 257              		.cfi_restore 1
+ 258 00f0 03340102 		ld	s0,32(sp)
+ 259              		.cfi_restore 8
+ 260              		.cfi_def_cfa 2, 48
+ 261 00f4 13010103 		addi	sp,sp,48
+ 262              		.cfi_def_cfa_offset 0
+ 263 00f8 67800000 		jr	ra
+ 264              		.cfi_endproc
+ 265              	.LFE9:
+ 267              		.globl	_ZN5EventC1Ev
+ 268              		.set	_ZN5EventC1Ev,_ZN5EventC2Ev
+ 269              		.weak	_ZTV5Event
+ 270              		.section	.data.rel.ro.local._ZTV5Event,"awG",@progbits,_ZTV5Event,comdat
+ 271              		.align	3
+ 274              	_ZTV5Event:
+ 275 0000 00000000 		.dword	0
+ 275      00000000 
+ 276 0008 00000000 		.dword	0
+ 276      00000000 
+ 277 0010 00000000 		.dword	_ZN5EventD1Ev
+ 277      00000000 
+ 278 0018 00000000 		.dword	_ZN5EventD0Ev
+ 278      00000000 
+ 279 0020 00000000 		.dword	_ZN5Event4waitEv
+ 279      00000000 
+ 280 0028 00000000 		.dword	_ZN5Event6signalEv
+GAS LISTING /tmp/cc4UBkCP.s 			page 7
+
+
+ 280      00000000 
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 4 "src/../h/../h/../h/../lib/hw.h"
+ 284              		.file 5 "src/../h/../h/../h/../h/syscall_c.h"
+GAS LISTING /tmp/cc4UBkCP.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Event.cpp
+     /tmp/cc4UBkCP.s:9      .text:0000000000000000 _ZN5Event4waitEv
+     /tmp/cc4UBkCP.s:13     .text:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:15     .text:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:16     .text:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:17     .text:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:19     .text:0000000000000004 .L0 
+     /tmp/cc4UBkCP.s:21     .text:0000000000000008 .L0 
+     /tmp/cc4UBkCP.s:23     .text:000000000000000c .L0 
+     /tmp/cc4UBkCP.s:26     .text:0000000000000014 .L0 
+     /tmp/cc4UBkCP.s:27     .text:0000000000000014 .L0 
+     /tmp/cc4UBkCP.s:33     .text:000000000000001c .L0 
+     /tmp/cc4UBkCP.s:34     .text:0000000000000020 .L0 
+     /tmp/cc4UBkCP.s:37     .text:0000000000000028 .L0 
+     /tmp/cc4UBkCP.s:38     .text:0000000000000028 .L0 
+     /tmp/cc4UBkCP.s:40     .text:000000000000002c .L0 
+     /tmp/cc4UBkCP.s:42     .text:000000000000002c .L0 
+     /tmp/cc4UBkCP.s:43     .text:000000000000002c .L0 
+     /tmp/cc4UBkCP.s:46     .text:0000000000000034 .L0 
+     /tmp/cc4UBkCP.s:47     .text:0000000000000034 .L0 
+     /tmp/cc4UBkCP.s:49     .text:000000000000003c .L0 
+     /tmp/cc4UBkCP.s:51     .text:0000000000000040 .L0 
+     /tmp/cc4UBkCP.s:52     .text:0000000000000040 .L0 
+     /tmp/cc4UBkCP.s:54     .text:0000000000000044 .L0 
+     /tmp/cc4UBkCP.s:56     .text:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:62     .text:0000000000000048 _ZN5Event6signalEv
+     /tmp/cc4UBkCP.s:65     .text:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:67     .text:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:68     .text:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:69     .text:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:71     .text:000000000000004c .L0 
+     /tmp/cc4UBkCP.s:74     .text:0000000000000054 .L0 
+     /tmp/cc4UBkCP.s:76     .text:0000000000000058 .L0 
+     /tmp/cc4UBkCP.s:78     .text:000000000000005c .L0 
+     /tmp/cc4UBkCP.s:79     .text:000000000000005c .L0 
+     /tmp/cc4UBkCP.s:82     .text:0000000000000064 .L0 
+     /tmp/cc4UBkCP.s:83     .text:0000000000000064 .L0 
+     /tmp/cc4UBkCP.s:89     .text:000000000000006c .L0 
+     /tmp/cc4UBkCP.s:90     .text:0000000000000070 .L0 
+     /tmp/cc4UBkCP.s:93     .text:0000000000000078 .L0 
+     /tmp/cc4UBkCP.s:94     .text:0000000000000078 .L0 
+     /tmp/cc4UBkCP.s:96     .text:000000000000007c .L0 
+     /tmp/cc4UBkCP.s:98     .text:000000000000007c .L0 
+     /tmp/cc4UBkCP.s:99     .text:000000000000007c .L0 
+     /tmp/cc4UBkCP.s:102    .text:0000000000000084 .L0 
+     /tmp/cc4UBkCP.s:103    .text:0000000000000084 .L0 
+     /tmp/cc4UBkCP.s:105    .text:000000000000008c .L0 
+     /tmp/cc4UBkCP.s:107    .text:0000000000000090 .L0 
+     /tmp/cc4UBkCP.s:108    .text:0000000000000090 .L0 
+     /tmp/cc4UBkCP.s:110    .text:0000000000000094 .L0 
+     /tmp/cc4UBkCP.s:112    .text:0000000000000098 .L0 
+     /tmp/cc4UBkCP.s:119    .text._ZN5EventD2Ev:0000000000000000 _ZN5EventD2Ev
+     /tmp/cc4UBkCP.s:123    .text._ZN5EventD2Ev:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:125    .text._ZN5EventD2Ev:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:126    .text._ZN5EventD2Ev:0000000000000004 .L0 
+     /tmp/cc4UBkCP.s:129    .text._ZN5EventD2Ev:000000000000000c .L0 
+GAS LISTING /tmp/cc4UBkCP.s 			page 9
+
+
+     /tmp/cc4UBkCP.s:130    .text._ZN5EventD2Ev:000000000000000c .L0 
+     /tmp/cc4UBkCP.s:132    .text._ZN5EventD2Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:274    .data.rel.ro.local._ZTV5Event:0000000000000000 _ZTV5Event
+     /tmp/cc4UBkCP.s:135    .text._ZN5EventD2Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:141    .text._ZN5EventD2Ev:0000000000000028 .L0 
+     /tmp/cc4UBkCP.s:143    .text._ZN5EventD2Ev:000000000000002c .L0 
+     /tmp/cc4UBkCP.s:144    .text._ZN5EventD2Ev:000000000000002c .L0 
+     /tmp/cc4UBkCP.s:146    .text._ZN5EventD2Ev:0000000000000030 .L0 
+     /tmp/cc4UBkCP.s:148    .text._ZN5EventD2Ev:0000000000000034 .L0 
+     /tmp/cc4UBkCP.s:119    .text._ZN5EventD2Ev:0000000000000000 _ZN5EventD1Ev
+     /tmp/cc4UBkCP.s:157    .text._ZN5EventD0Ev:0000000000000000 _ZN5EventD0Ev
+     /tmp/cc4UBkCP.s:160    .text._ZN5EventD0Ev:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:162    .text._ZN5EventD0Ev:0000000000000000 .L0 
+     /tmp/cc4UBkCP.s:163    .text._ZN5EventD0Ev:0000000000000004 .L0 
+     /tmp/cc4UBkCP.s:167    .text._ZN5EventD0Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:168    .text._ZN5EventD0Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:169    .text._ZN5EventD0Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:171    .text._ZN5EventD0Ev:0000000000000014 .L0 
+     /tmp/cc4UBkCP.s:177    .text._ZN5EventD0Ev:0000000000000018 .L0 
+     /tmp/cc4UBkCP.s:187    .text._ZN5EventD0Ev:000000000000003c .L0 
+     /tmp/cc4UBkCP.s:189    .text._ZN5EventD0Ev:0000000000000040 .L0 
+     /tmp/cc4UBkCP.s:190    .text._ZN5EventD0Ev:0000000000000040 .L0 
+     /tmp/cc4UBkCP.s:192    .text._ZN5EventD0Ev:0000000000000044 .L0 
+     /tmp/cc4UBkCP.s:195    .text._ZN5EventD0Ev:0000000000000048 .L0 
+     /tmp/cc4UBkCP.s:197    .text._ZN5EventD0Ev:000000000000004c .L0 
+     /tmp/cc4UBkCP.s:204    .text:0000000000000098 _ZN5EventC2Ev
+     /tmp/cc4UBkCP.s:207    .text:0000000000000098 .L0 
+     /tmp/cc4UBkCP.s:209    .text:0000000000000098 .L0 
+     /tmp/cc4UBkCP.s:210    .text:000000000000009c .L0 
+     /tmp/cc4UBkCP.s:213    .text:00000000000000a4 .L0 
+     /tmp/cc4UBkCP.s:214    .text:00000000000000a4 .L0 
+     /tmp/cc4UBkCP.s:216    .text:00000000000000a8 .L0 
+     /tmp/cc4UBkCP.s:223    .text:00000000000000a8 .L0 
+     /tmp/cc4UBkCP.s:231    .text:00000000000000b8 .L0 
+     /tmp/cc4UBkCP.s:238    .text:00000000000000c4 .L0 
+     /tmp/cc4UBkCP.s:239    .text:00000000000000c4 .L0 
+     /tmp/cc4UBkCP.s:250    .text:00000000000000e0 .L0 
+     /tmp/cc4UBkCP.s:256    .text:00000000000000ec .L0 
+     /tmp/cc4UBkCP.s:257    .text:00000000000000f0 .L0 
+     /tmp/cc4UBkCP.s:259    .text:00000000000000f4 .L0 
+     /tmp/cc4UBkCP.s:260    .text:00000000000000f4 .L0 
+     /tmp/cc4UBkCP.s:262    .text:00000000000000f8 .L0 
+     /tmp/cc4UBkCP.s:264    .text:00000000000000fc .L0 
+     /tmp/cc4UBkCP.s:204    .text:0000000000000098 _ZN5EventC1Ev
+     /tmp/cc4UBkCP.s:285    .text:00000000000000fc .L0 
+     /tmp/cc4UBkCP.s:153    .text._ZN5EventD2Ev:0000000000000034 .L0 
+     /tmp/cc4UBkCP.s:200    .text._ZN5EventD0Ev:000000000000004c .L0 
+     /tmp/cc4UBkCP.s:231    .text:00000000000000b8 .L0 
+     /tmp/cc4UBkCP.s:239    .text:00000000000000c4 .L0 
+     /tmp/cc4UBkCP.s:31     .text:000000000000001c .L7
+     /tmp/cc4UBkCP.s:87     .text:000000000000006c .L15
+     /tmp/cc4UBkCP.s:135    .text._ZN5EventD2Ev:0000000000000010 .L0 
+     /tmp/cc4UBkCP.s:177    .text._ZN5EventD0Ev:0000000000000018 .L0 
+     /tmp/cc4UBkCP.s:773    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cc4UBkCP.s:1574   .debug_str:00000000000001fc .LASF39
+     /tmp/cc4UBkCP.s:1552   .debug_str:000000000000014d .LASF40
+     /tmp/cc4UBkCP.s:1572   .debug_str:00000000000001e7 .LASF41
+GAS LISTING /tmp/cc4UBkCP.s 			page 10
+
+
+     /tmp/cc4UBkCP.s:1490   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/cc4UBkCP.s:1500   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cc4UBkCP.s:1550   .debug_str:0000000000000140 .LASF0
+     /tmp/cc4UBkCP.s:1558   .debug_str:0000000000000175 .LASF1
+     /tmp/cc4UBkCP.s:1544   .debug_str:0000000000000111 .LASF2
+     /tmp/cc4UBkCP.s:1538   .debug_str:00000000000000fc .LASF4
+     /tmp/cc4UBkCP.s:1566   .debug_str:00000000000001ad .LASF3
+     /tmp/cc4UBkCP.s:1512   .debug_str:0000000000000051 .LASF5
+     /tmp/cc4UBkCP.s:1554   .debug_str:000000000000015b .LASF6
+     /tmp/cc4UBkCP.s:1548   .debug_str:000000000000012d .LASF7
+     /tmp/cc4UBkCP.s:1586   .debug_str:000000000000031a .LASF8
+     /tmp/cc4UBkCP.s:1534   .debug_str:00000000000000e7 .LASF9
+     /tmp/cc4UBkCP.s:1588   .debug_str:000000000000032a .LASF10
+     /tmp/cc4UBkCP.s:1578   .debug_str:00000000000002cb .LASF11
+     /tmp/cc4UBkCP.s:1514   .debug_str:0000000000000058 .LASF12
+     /tmp/cc4UBkCP.s:1502   .debug_str:0000000000000000 .LASF13
+     /tmp/cc4UBkCP.s:1518   .debug_str:0000000000000076 .LASF14
+     /tmp/cc4UBkCP.s:1564   .debug_str:0000000000000197 .LASF15
+     /tmp/cc4UBkCP.s:1522   .debug_str:0000000000000092 .LASF16
+     /tmp/cc4UBkCP.s:1576   .debug_str:00000000000002c0 .LASF24
+     /tmp/cc4UBkCP.s:1510   .debug_str:000000000000003d .LASF42
+     /tmp/cc4UBkCP.s:1580   .debug_str:00000000000002da .LASF17
+     /tmp/cc4UBkCP.s:1568   .debug_str:00000000000001bf .LASF19
+     /tmp/cc4UBkCP.s:1584   .debug_str:0000000000000300 .LASF18
+     /tmp/cc4UBkCP.s:1542   .debug_str:0000000000000109 .LASF20
+     /tmp/cc4UBkCP.s:1570   .debug_str:00000000000001cf .LASF21
+     /tmp/cc4UBkCP.s:1540   .debug_str:0000000000000103 .LASF22
+     /tmp/cc4UBkCP.s:1528   .debug_str:00000000000000c0 .LASF23
+     /tmp/cc4UBkCP.s:1590   .debug_str:0000000000000339 .LASF25
+     /tmp/cc4UBkCP.s:1520   .debug_str:0000000000000082 .LASF26
+     /tmp/cc4UBkCP.s:1506   .debug_str:000000000000001e .LASF27
+     /tmp/cc4UBkCP.s:1516   .debug_str:0000000000000068 .LASF43
+     /tmp/cc4UBkCP.s:1526   .debug_str:00000000000000bb .LASF28
+     /tmp/cc4UBkCP.s:1582   .debug_str:00000000000002ef .LASF30
+     /tmp/cc4UBkCP.s:1556   .debug_str:000000000000016e .LASF29
+     /tmp/cc4UBkCP.s:1524   .debug_str:00000000000000a8 .LASF31
+     /tmp/cc4UBkCP.s:1536   .debug_str:00000000000000f5 .LASF32
+     /tmp/cc4UBkCP.s:1508   .debug_str:000000000000002f .LASF33
+     /tmp/cc4UBkCP.s:1562   .debug_str:0000000000000192 .LASF34
+     /tmp/cc4UBkCP.s:1560   .debug_str:0000000000000188 .LASF35
+     /tmp/cc4UBkCP.s:1546   .debug_str:000000000000011f .LASF36
+     /tmp/cc4UBkCP.s:158    .text._ZN5EventD0Ev:0000000000000000 .LFB16
+     /tmp/cc4UBkCP.s:198    .text._ZN5EventD0Ev:000000000000004c .LFE16
+     /tmp/cc4UBkCP.s:1336   .debug_loc:0000000000000000 .LLST3
+     /tmp/cc4UBkCP.s:174    .text._ZN5EventD0Ev:0000000000000018 .LBB13
+     /tmp/cc4UBkCP.s:182    .text._ZN5EventD0Ev:000000000000002c .LBE13
+     /tmp/cc4UBkCP.s:1354   .debug_loc:000000000000004c .LLST4
+     /tmp/cc4UBkCP.s:180    .text._ZN5EventD0Ev:000000000000002c .LVL12
+     /tmp/cc4UBkCP.s:185    .text._ZN5EventD0Ev:0000000000000038 .LVL13
+     /tmp/cc4UBkCP.s:1530   .debug_str:00000000000000c5 .LASF37
+     /tmp/cc4UBkCP.s:120    .text._ZN5EventD2Ev:0000000000000000 .LFB14
+     /tmp/cc4UBkCP.s:149    .text._ZN5EventD2Ev:0000000000000034 .LFE14
+     /tmp/cc4UBkCP.s:1365   .debug_loc:0000000000000082 .LLST2
+     /tmp/cc4UBkCP.s:138    .text._ZN5EventD2Ev:0000000000000024 .LVL9
+     /tmp/cc4UBkCP.s:63     .text:0000000000000048 .LFB12
+     /tmp/cc4UBkCP.s:113    .text:0000000000000098 .LFE12
+     /tmp/cc4UBkCP.s:1379   .debug_loc:00000000000000bb .LLST1
+GAS LISTING /tmp/cc4UBkCP.s 			page 11
+
+
+     /tmp/cc4UBkCP.s:100    .text:0000000000000084 .LVL7
+     /tmp/cc4UBkCP.s:10     .text:0000000000000000 .LFB11
+     /tmp/cc4UBkCP.s:57     .text:0000000000000048 .LFE11
+     /tmp/cc4UBkCP.s:1404   .debug_loc:000000000000011d .LLST0
+     /tmp/cc4UBkCP.s:44     .text:0000000000000034 .LVL3
+     /tmp/cc4UBkCP.s:1504   .debug_str:0000000000000010 .LASF38
+     /tmp/cc4UBkCP.s:205    .text:0000000000000098 .LFB9
+     /tmp/cc4UBkCP.s:265    .text:00000000000000fc .LFE9
+     /tmp/cc4UBkCP.s:1429   .debug_loc:000000000000017f .LLST5
+     /tmp/cc4UBkCP.s:219    .text:00000000000000a8 .LBB16
+     /tmp/cc4UBkCP.s:229    .text:00000000000000b8 .LBE16
+     /tmp/cc4UBkCP.s:1443   .debug_loc:00000000000001b8 .LLST6
+     /tmp/cc4UBkCP.s:1451   .debug_loc:00000000000001dc .LLST7
+     /tmp/cc4UBkCP.s:235    .text:00000000000000c4 .LBB18
+     /tmp/cc4UBkCP.s:248    .text:00000000000000e0 .LBE18
+     /tmp/cc4UBkCP.s:1458   .debug_loc:00000000000001ff .LLST8
+     /tmp/cc4UBkCP.s:1466   .debug_loc:0000000000000223 .LLST9
+     /tmp/cc4UBkCP.s:253    .text:00000000000000ec .LVL21
+     /tmp/cc4UBkCP.s:1532   .debug_str:00000000000000d3 .LASF44
+     /tmp/cc4UBkCP.s:161    .text._ZN5EventD0Ev:0000000000000000 .LVL10
+     /tmp/cc4UBkCP.s:193    .text._ZN5EventD0Ev:0000000000000044 .LVL14
+     /tmp/cc4UBkCP.s:173    .text._ZN5EventD0Ev:0000000000000018 .LVL11
+     /tmp/cc4UBkCP.s:124    .text._ZN5EventD2Ev:0000000000000000 .LVL8
+     /tmp/cc4UBkCP.s:66     .text:0000000000000048 .LVL4
+     /tmp/cc4UBkCP.s:84     .text:0000000000000068 .LVL5
+     /tmp/cc4UBkCP.s:86     .text:000000000000006c .LVL6
+     /tmp/cc4UBkCP.s:14     .text:0000000000000000 .LVL0
+     /tmp/cc4UBkCP.s:28     .text:0000000000000018 .LVL1
+     /tmp/cc4UBkCP.s:30     .text:000000000000001c .LVL2
+     /tmp/cc4UBkCP.s:208    .text:0000000000000098 .LVL15
+     /tmp/cc4UBkCP.s:251    .text:00000000000000e4 .LVL20
+     /tmp/cc4UBkCP.s:217    .text:00000000000000a8 .LVL16
+     /tmp/cc4UBkCP.s:227    .text:00000000000000b8 .LVL17
+     /tmp/cc4UBkCP.s:234    .text:00000000000000c4 .LVL18
+     /tmp/cc4UBkCP.s:245    .text:00000000000000e0 .LVL19
+     /tmp/cc4UBkCP.s:286    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/cc4UBkCP.s:5      .text:0000000000000000 .Ltext0
+     /tmp/cc4UBkCP.s:282    .text:00000000000000fc .Letext0
+                           .group:0000000000000000 _ZN5EventD5Ev
+
+UNDEFINED SYMBOLS
+_ZN10SemaphoreK5blockEv
+_ZN10SemaphoreK7deblockEv
+_ZN10SemaphoreKD2Ev
+_ZN10SemaphoreKdlEPv
+_ZTV10SemaphoreK
+_ZN10SemaphoreKD1Ev
